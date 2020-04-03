@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_watch_list: break;
             case R.id.nav_watched_list:
-                Intent intent = new Intent(MainActivity.this,Watched_list_Activity.class);
+                Intent intent = new Intent(MainActivity.this,WatchedListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_movielist:
-                Intent intent1 = new Intent(MainActivity.this,MovieList.class);
+                Intent intent1 = new Intent(MainActivity.this,MovieListActivity.class);
                 startActivity(intent1);
                 break;
 
