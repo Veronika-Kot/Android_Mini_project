@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.android_mini_project.MovieListActivity">
 
-    <ListView
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/popular"
+                style="@style/MovieSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="selectMovieList"
+                android:text="Popular" />
+
+            <Button
+                android:id="@+id/top_rated"
+                style="@style/MovieSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="selectMovieList"
+                android:text="Top Rated" />
+
+            <Button
+                android:id="@+id/now_playing"
+                style="@style/MovieSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="selectMovieList"
+                android:text="Now Playing" />
+
+            <Button
+                android:id="@+id/upcoming"
+                style="@style/MovieSearchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="selectMovieList"
+                android:text="Upcoming" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieList"
         android:layout_width="match_parent"
-        android:divider="@null"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:divider="@null" />
 </RelativeLayout>

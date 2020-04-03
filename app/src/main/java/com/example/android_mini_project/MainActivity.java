@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search_movies:
-                Intent intent = new Intent(MainActivity.this, MovieList.class);
+                Intent intent = new Intent(MainActivity.this, MovieListActivity.class);
                 startActivity(intent);
                 return true;
             default:

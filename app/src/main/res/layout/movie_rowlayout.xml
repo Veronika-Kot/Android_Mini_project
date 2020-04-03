@@ -14,19 +14,18 @@
     </androidx.appcompat.widget.AppCompatImageView>
 
 
-    <TextView
-        android:id="@+id/rating"
-        android:maxLines="1"
+    <ImageButton
+        android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="4dp"
         android:paddingLeft="4dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorAccent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_favorite"
+        android:tint="@color/favorite_icon_color"
+        android:background="@android:color/transparent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         />
@@ -43,31 +42,31 @@
         android:layout_toRightOf = "@+id/appCompatImageView"
         android:textSize="24sp" />
 
-    <LinearLayout
-        android:id="@+id/db_row"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/title"
-        android:layout_margin="6dp"
-        android:layout_toEndOf = "@+id/appCompatImageView"
-        android:layout_toRightOf = "@+id/appCompatImageView"
-
-        >
-
         <TextView
+            android:id="@+id/year"
+            android:maxLines="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
             android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf = "@+id/appCompatImageView"
+            android:layout_toRightOf = "@+id/appCompatImageView"
             android:text="Overview:" />
+
 
         <TextView
             android:id="@+id/data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/year"
+            android:layout_margin="6dp"
+            android:layout_toEndOf = "@+id/appCompatImageView"
+            android:layout_toRightOf = "@+id/appCompatImageView"
             android:maxLines="3"
             android:ellipsize="end"
             android:text=""/>
-    </LinearLayout>
 
 </RelativeLayout>

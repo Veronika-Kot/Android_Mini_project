@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MovieSearchButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/button_color</item>
+        <item name="android:background">@drawable/round_button</item>
+        <item name="android:layout_marginEnd">2dp</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+    </style>
 </resources>
