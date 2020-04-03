@@ -12,6 +12,4 @@ public interface ApiService {
     Call<MovieResponse> getNowPlaying(@Path(value="endPoint", encoded=true) String endPoint,
                                       @Query("page") long page,
                                       @Query("query") String query);
-
-
 }

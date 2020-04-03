@@ -18,6 +18,7 @@ public class MovieDataSource  extends PageKeyedDataSource<Long, Movie> {
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<Long, Movie> callback) {
+    // Making an API call for the first page of movies
 
             ApiService service = ApiServiceBuilder.buildService(ApiService.class);
             Call<MovieResponse> call = service.getNowPlaying(Globals.endPoint, FIRST_PAGE, Globals.searchQuery);
@@ -32,7 +33,6 @@ public class MovieDataSource  extends PageKeyedDataSource<Long, Movie> {
                 @Override public void onFailure(Call<MovieResponse> call, Throwable t) {
                 }
             });
-
     }
 
     @Override
@@ -42,8 +42,8 @@ public class MovieDataSource  extends PageKeyedDataSource<Long, Movie> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Long> params, @NonNull LoadCallback<Long, Movie> callback) {
+    // Making an API call for next page of movies
 
-        Log.i("!!!!", "onLoadAfter");
         ApiService service = ApiServiceBuilder.buildService(ApiService.class);
         Call<MovieResponse> call = service.getNowPlaying(Globals.endPoint, params.key, Globals.searchQuery);
         call.enqueue(new Callback<MovieResponse>() {

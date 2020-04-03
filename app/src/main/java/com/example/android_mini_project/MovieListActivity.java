@@ -21,7 +21,10 @@ import com.example.android_mini_project.helpers.Globals;
 import com.example.android_mini_project.models.Movie;
 import com.example.android_mini_project.viewmodels.MovieViewModal;
 
-public class MovieList extends AppCompatActivity {
+/**
+ * MovieListActivity to show a list of all available movies
+ */
+public class MovieListActivity extends AppCompatActivity {
 
     MovieApiListAdapter adapter;
     MovieViewModal itemViewModel;
@@ -35,14 +38,17 @@ public class MovieList extends AppCompatActivity {
         // Setting title to the Activity
         this.setTitle(R.string.search_movies);
 
-        // Creates reference of ListView
+        // Creates reference of RecyclerView
         listview = findViewById(R.id.movieList);
 
+        // Creating and setting adapter
         adapter = new MovieApiListAdapter();
         listview.setLayoutManager(new LinearLayoutManager(this));
 
+        // Getting instance of MovieViewModal
         itemViewModel = ViewModelProviders.of(this).get(MovieViewModal.class);
 
+        // Observing the datasource change
         itemViewModel.movieList.observe(this, new Observer<PagedList<Movie>>() {
             @Override
             public void onChanged(PagedList<Movie> movies) {
@@ -51,8 +57,8 @@ public class MovieList extends AppCompatActivity {
         });
         listview.setAdapter(adapter);
 
+        // Setting Popular button to be presses, since it's a default endpoint
         findViewById(R.id.popular).setSelected(true);
-
     }
 
     @Override
@@ -61,6 +67,7 @@ public class MovieList extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
+        // Configuring  search view
         SearchManager searchManager = (SearchManager)
                 getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchMenuItem = menu.findItem(R.id.search);
@@ -91,7 +98,7 @@ public class MovieList extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.main:
-                Intent intent = new Intent(MovieList.this, MainActivity.class);
+                Intent intent = new Intent(MovieListActivity.this, MainActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.search_by_photo:
@@ -102,9 +109,14 @@ public class MovieList extends AppCompatActivity {
         }
     }
 
+    /**
+     * selectMovieList - called by carousel of buttons,
+     * it's changes the global end point variable and invalidates data source
+     * so new API call is made
+     *
+     * @param v
+     */
     public void selectMovieList(View v) {
-        Log.d("!!!!@@@!!!!", itemViewModel.movieList.getValue().get(1).getTitle());
-
         switch (v.getId()) {
             case R.id.upcoming:
                 Globals.endPoint = "movie/upcoming";
@@ -130,6 +142,8 @@ public class MovieList extends AppCompatActivity {
 
         listview.setVisibility(View.INVISIBLE);
         itemViewModel.invalidateDataSource();
+
+        // Adding a slight delay to prevent list of movies flicking
         try {
             Thread.sleep(200);
         } catch (Exception e) {
@@ -137,6 +151,9 @@ public class MovieList extends AppCompatActivity {
         listview.setVisibility(View.VISIBLE);
     }
 
+    /**
+     *  unselectButtons - unselecting all buttons in the carousel
+     */
     private void unselectButtons() {
         findViewById(R.id.popular).setSelected(false);
         findViewById(R.id.upcoming).setSelected(false);

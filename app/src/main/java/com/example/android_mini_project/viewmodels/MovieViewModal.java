@@ -13,11 +13,11 @@ public class MovieViewModal extends ViewModel {
     public LiveData<PagedList<Movie>> movieList;
     private LiveData<MovieDataSource> liveDataSource;
 
-    public MovieViewModal() {
+    public MovieViewModal() { init(); }
 
-        init();
-    }
-
+    /**
+     * init - setting PagedList configurations, getting data
+     */
     private void init() {
         MovieDataSourceFactory itemDataSourceFactory = new MovieDataSourceFactory();
         liveDataSource = itemDataSourceFactory.movieLiveDataSource;
@@ -29,9 +29,11 @@ public class MovieViewModal extends ViewModel {
         movieList = new LivePagedListBuilder<>(itemDataSourceFactory, config).build();
     }
 
+    /**
+     * invalidateDataSource - makes data source invalid, so new API call is made
+     */
     public void invalidateDataSource() {
         liveDataSource.getValue().invalidate();
-        //invalidate();
     }
 }
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.annotation.SuppressLint;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -21,6 +22,9 @@ import java.io.InputStream;
 
 public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAdapter.MovieViewHolder> {
 
+    /**
+     * MovieApiListAdapter for a RecyclerView
+     */
     public MovieApiListAdapter() {
         super(MOVIE_COMPARATOR);
     }
@@ -36,25 +40,44 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         holder.bind(getItem(position));
+
+        // This listener executed for each list't item
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            // This function is executed when item is clicked
+            @Override
+            public void onClick(View v) {
+               Log.i("!!!@@@!!!", "I've selected a row " + getItem(position).getTitle());
+            }
+        });
     }
 
-    //Class to connect row UI elements with data
+    /**
+     * MovieViewHolder class to represent a single row (RecyclerView)
+     */
     public class MovieViewHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
-        private TextView textViewRating;
+        private TextView textViewYear;
         private TextView textViewData;
+        private ImageButton buttonFavorite;
 
+        // Constructor
         MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = (TextView) itemView.findViewById(R.id.title);
-            textViewRating = (TextView) itemView.findViewById(R.id.rating);
+            textViewYear = (TextView) itemView.findViewById(R.id.year);
             textViewData = (TextView) itemView.findViewById(R.id.data);
+            buttonFavorite = (ImageButton) itemView.findViewById(R.id.like);
         }
 
+        /**
+         * bind -  to connect the row view with data
+         * @param movie
+         */
         void bind(Movie movie) {
             //Assigning Movies data to UI elements
             textViewTitle.setText(movie.getTitle());
-            textViewRating.setText(movie.getRelease_date());
+            textViewYear.setText(movie.getRelease_date());
             textViewData.setText(movie.getOverview());
 
             //Assigning Movie Poster
@@ -64,6 +87,15 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
                         .execute("http://image.tmdb.org/t/p/w185/" + movie.getPoster_path());
 
             }
+
+            // Listender for a button inside the item row
+            buttonFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("!!!@@@!!!", "I've tapped on a button " + movie.getTitle());
+                    v.setSelected(true);
+                }
+            });
         }
 
         /**

@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.android_mini_project.MovieList">
+    tools:context="com.example.android_mini_project.MovieListActivity">
 
     <HorizontalScrollView
         android:layout_width="wrap_content"

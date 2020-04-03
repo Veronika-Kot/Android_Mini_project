@@ -24,7 +24,12 @@ public class ApiServiceBuilder {
     // Create Retrofit Instance
     private static Retrofit retrofit = builder.build();
 
-    // Function to create a service
+    /**
+     * buildService - to build a requested service
+     * @param type
+     * @param <T>
+     * @return retrofit service
+     */
     public static <T> T buildService(Class<T> type) {
         return retrofit.create(type);
     }
