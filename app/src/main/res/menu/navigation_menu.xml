@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_watch_list"
+            android:icon="@drawable/watch_list_icon"
+            android:title="Watch List" />
+
+        <item
+            android:id="@+id/nav_movielist"
+            android:icon="@drawable/movie_list_icon"
+            android:title="Movie List" />
+
+        <item
+            android:id="@+id/nav_watched_list"
+            android:icon="@drawable/watched_list_icon"
+            android:title="Watched List" />
+    </group>
+
+
+</menu>

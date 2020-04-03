@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Android_Mini_project</string>
     <string name="search_movies">Search Movies</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Open Navigation Drawer</string>
+
 </resources>
