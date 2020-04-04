@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    public ActionBarDrawerToggle toggle;
     Toolbar toolbar;
     Menu menu;
     TextView textView;
@@ -32,13 +33,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
-        toolbar=findViewById(R.id.toolbar);
+//        toolbar=findViewById(R.id.toolbar);
+//
+//
 
-         setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -71,14 +73,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (toggle.onOptionsItemSelected(item))
+            return true;
+
         switch (item.getItemId()) {
             case R.id.search_movies:
                 Intent intent = new Intent(MainActivity.this, MovieListActivity.class);
                 startActivity(intent);
                 return true;
             default:
-                return true;
+
+                    return true;
         }
+
     }
 
     @Override
