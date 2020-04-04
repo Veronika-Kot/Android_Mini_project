@@ -30,6 +30,7 @@ public class MovieListActivity extends AppCompatActivity {
     MovieApiListAdapter adapter;
     MovieViewModal itemViewModel;
     RecyclerView listview;
+    SearchView searchView;
 
     private static final String TAG = "MovieListActivity";
 
@@ -64,6 +65,7 @@ public class MovieListActivity extends AppCompatActivity {
 
         // Setting Popular button to be presses, since it's a default endpoint
         findViewById(R.id.popular).setSelected(true);
+
     }
 
     @Override
@@ -76,14 +78,15 @@ public class MovieListActivity extends AppCompatActivity {
         SearchManager searchManager = (SearchManager)
                 getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchMenuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
+        searchView = (SearchView) searchMenuItem.getActionView();
+
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
-
                 Globals.endPoint = "search/movie";
                 Globals.searchQuery = query;
                 itemViewModel.invalidateDataSource();
@@ -178,16 +181,15 @@ public class MovieListActivity extends AppCompatActivity {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     String text = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
-                    //statusMessage.setText(R.string.ocr_success);
-                    //textValue.setText(text);
+
+                    searchView.setQuery(text, true);
+
                     Log.d(TAG, "Text read: " + text);
                 } else {
-                    //statusMessage.setText(R.string.ocr_failure);
                     Log.d(TAG, "No Text captured, intent data is null");
                 }
             } else {
-                //statusMessage.setText(String.format(getString(R.string.ocr_error),
-                  //      CommonStatusCodes.getStatusCodeString(resultCode)));
+                Log.d(TAG, "No Text captured, something went wrong...!!!");
             }
         }
         else {
