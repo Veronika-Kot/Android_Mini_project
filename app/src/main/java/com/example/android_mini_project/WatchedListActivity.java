@@ -10,5 +10,7 @@ public class WatchedListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watched_list);
+
+        this.setTitle(R.string.watched_list);
     }
 }
