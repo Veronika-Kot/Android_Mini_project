@@ -20,6 +20,7 @@ import android.widget.SearchView;
 import com.example.android_mini_project.helpers.Globals;
 import com.example.android_mini_project.models.Movie;
 import com.example.android_mini_project.viewmodels.MovieViewModal;
+import com.google.android.gms.common.api.CommonStatusCodes;
 
 /**
  * MovieListActivity to show a list of all available movies
@@ -30,6 +31,10 @@ public class MovieListActivity extends AppCompatActivity {
     MovieViewModal itemViewModel;
     RecyclerView listview;
 
+    private static final String TAG = "MovieListActivity";
+
+    //For ImageToText
+    private static final int RC_OCR_CAPTURE = 9003;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +108,12 @@ public class MovieListActivity extends AppCompatActivity {
                 return true;
             case R.id.search_by_photo:
                 Log.i("!!!@@@!!!", "Search by photo");
+                // launch Ocr capture activity.
+                Intent i = new Intent(this, OcrCaptureActivity.class);
+                i.putExtra(OcrCaptureActivity.AutoFocus, true);
+                i.putExtra(OcrCaptureActivity.UseFlash, false);
+
+                startActivityForResult(i, RC_OCR_CAPTURE);
                 return true;
             default:
                 return true;
@@ -159,5 +170,28 @@ public class MovieListActivity extends AppCompatActivity {
         findViewById(R.id.upcoming).setSelected(false);
         findViewById(R.id.top_rated).setSelected(false);
         findViewById(R.id.now_playing).setSelected(false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RC_OCR_CAPTURE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    String text = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
+                    //statusMessage.setText(R.string.ocr_success);
+                    //textValue.setText(text);
+                    Log.d(TAG, "Text read: " + text);
+                } else {
+                    //statusMessage.setText(R.string.ocr_failure);
+                    Log.d(TAG, "No Text captured, intent data is null");
+                }
+            } else {
+                //statusMessage.setText(String.format(getString(R.string.ocr_error),
+                  //      CommonStatusCodes.getStatusCodeString(resultCode)));
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
