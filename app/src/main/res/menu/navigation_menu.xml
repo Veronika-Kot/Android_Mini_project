@@ -7,17 +7,18 @@
 
         <item
             android:id="@+id/nav_watch_list"
-            android:icon="@drawable/watch_list_icon"
-            android:title="Watch List" />
+            android:icon= "@drawable/watch_list"
+            android:title="Watch List"
+            />
 
         <item
             android:id="@+id/nav_movielist"
-            android:icon="@drawable/movie_list_icon"
+            android:icon="@drawable/movie_list"
             android:title="Movie List" />
 
         <item
             android:id="@+id/nav_watched_list"
-            android:icon="@drawable/watched_list_icon"
+            android:icon="@drawable/watched_list"
             android:title="Watched List" />
     </group>
 

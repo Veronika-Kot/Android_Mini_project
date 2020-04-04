@@ -1,6 +1,7 @@
 package com.example.android_mini_project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,10 +24,10 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    public ActionBarDrawerToggle toggle;
-    Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
+
     Menu menu;
-    TextView textView;
+
 
 
     @Override
@@ -34,21 +37,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
 //        toolbar=findViewById(R.id.toolbar);
-//
-//
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+
+        toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
+//        ActionBar actionBar;
+//        actionBar = getSupportActionBar();
+//        ColorDrawable colorDrawable
+//                = new ColorDrawable(Color.parseColor("#FFD300"));
+//
+//        // Set BackgroundDrawable
+//        actionBar.setBackgroundDrawable(colorDrawable);
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_watch_list);
     }
-
 
 
     @Override
@@ -69,13 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item))
-            return true;
-
+       if(toggle.onOptionsItemSelected(item))
+       {return  true;}
         switch (item.getItemId()) {
             case R.id.search_movies:
                 Intent intent = new Intent(MainActivity.this, MovieListActivity.class);
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
