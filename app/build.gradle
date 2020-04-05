@@ -44,4 +44,7 @@ dependencies {
     // Logging
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
     implementation 'com.google.android.gms:play-services-vision:10.0.0'
+    //cardview
+
+    compile 'androidx.cardview:cardview:1.0.0'
 }

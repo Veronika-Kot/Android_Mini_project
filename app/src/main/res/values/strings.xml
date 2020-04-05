@@ -18,5 +18,6 @@
     <string name="ocr_error">"Error reading text: %1$s"</string>
     <string name="watch_list">Watch List</string>
     <string name="watched_list">Watched List</string>
+    <string name="movieDescription">Movie Description</string>
 
 </resources>
