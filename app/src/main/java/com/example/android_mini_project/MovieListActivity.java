@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 /**
  * MovieListActivity to show a list of all available movies
  */
-public class MovieListActivity extends AppCompatActivity {
+public class MovieListActivity extends MainActivity {
 
     MovieApiListAdapter adapter;
     MovieViewModal itemViewModel;
@@ -40,6 +41,12 @@ public class MovieListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
+
+        // setting navigation bar
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+        drawerLayout.addView(contentView, 0);
+
 
         // Setting title to the Activity
         this.setTitle(R.string.search_movies);
@@ -73,6 +80,9 @@ public class MovieListActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
+
+
+
 
         // Configuring  search view
         SearchManager searchManager = (SearchManager)
