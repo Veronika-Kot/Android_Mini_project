@@ -12,19 +12,40 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
-
+import com.example.android_mini_project.models.Movie;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
+    private DatabaseReference movieDatabase;
+    private WatchListAdapter watchListAdapter;
+    ListView watchList;
+    Button buttonSortDate;
+    Button buttonSortTitle;
+    private String sortBy;
+    ValueEventListener getListener;
 
     Menu menu;
 
@@ -55,8 +76,64 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_watch_list);
+
+        // Populate watch list
+        sortBy = "byDate";
+        buttonSortDate = findViewById(R.id.buttonSortDate);
+        buttonSortTitle = findViewById(R.id.buttonSortTitle);
+        watchList = findViewById(R.id.watchList);
+        watchListAdapter  = new WatchListAdapter(MainActivity.this, R.layout.watch_list_rou_layout);
+        watchList.setAdapter(watchListAdapter);
+
+        movieDatabase = FirebaseDatabase.getInstance().getReference();
+        getListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                watchListAdapter.clearList();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    if (ds.child("watched").getValue().toString() == "false"){
+                        watchListAdapter.add(ds.getValue(Movie.class));
+                    }
+                }
+                watchListAdapter.sortByDate();
+                buttonSortDate.setSelected(true);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        };
+        movieDatabase.addValueEventListener(getListener);
     }
 
+    public void sortByDate(View view){
+        if (sortBy == "byDate"){
+            watchListAdapter.sortByDateReverse();
+            sortBy = "byDateReverse";
+        }
+        else{
+            watchListAdapter.sortByDate();
+            buttonSortDate.setSelected(true);
+            buttonSortTitle.setSelected(false);
+            sortBy = "byDate";
+        }
+        watchListAdapter.notifyDataSetChanged();
+    }
+
+    public void sortByTitle(View view){
+        if (sortBy == "byTitle"){
+            watchListAdapter.sortByTitleReverse();
+            sortBy = "byTitleReverse";
+        }
+        else{
+            watchListAdapter.sortByTitle();
+            buttonSortDate.setSelected(false);
+            buttonSortTitle.setSelected(true);
+            sortBy = "byTitle";
+        }
+        watchListAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onBackPressed(){
@@ -109,5 +186,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }}
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        movieDatabase.removeEventListener(getListener);
+    }
+}
 

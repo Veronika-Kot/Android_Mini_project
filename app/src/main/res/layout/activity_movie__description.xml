@@ -1,58 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Movie_Description">
-
-
-    <ImageView
-
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="215dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/ic_local_movies_black_24dp"
+        android:layout_height="match_parent"
+        tools:context=".Movie_Description" >
 
-        />
-
-    <TextView
-            android:id="@+id/movie_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:text="Title:"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp">
+            android:orientation="vertical" >
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/descriptionImageView"
+                android:layout_width="match_parent"
+                android:layout_height="215dp"
+                android:layout_marginTop="40dp"
+
+                android:src="@drawable/ic_local_movies_black_24dp" />
+
+            <TextView
+                android:id="@+id/descriptionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="50dp"
+                android:text="Title:"
+                android:textSize="24sp"
+                android:textStyle="bold">
 
 
-    </TextView>
+            </TextView>
 
-    <TextView
-        android:id="@+id/year"
-        android:maxLines="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:textSize="30sp"
-        android:text="Overview:" />
-    <TextView
-            android:id="@+id/movie_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:text="Description:">
+            <TextView
+                android:id="@+id/descriptionDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="1"
+                android:text="Overview:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    </TextView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/descriptionDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Description:"
+                android:textSize="24sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/descriptionNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Notes:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/descriptionEditNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonUpdate"
+                style="@style/MovieSearchButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:onClick="updateNotes"
+                android:text="@string/common_google_play_services_update_button" />
+
+            <Button
+                android:id="@+id/buttonBack"
+                style="@style/MovieSearchButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:onClick="backToList"
+                android:text="Back" />
+        </LinearLayout>
+    </ScrollView>
+
+
+
 

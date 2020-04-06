@@ -11,22 +11,37 @@ import android.annotation.SuppressLint;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android_mini_project.helpers.PosterDownloader;
 import com.example.android_mini_project.models.Movie;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAdapter.MovieViewHolder> {
 
+    private List<Integer> listOfMovieIds;
     /**
      * MovieApiListAdapter for a RecyclerView
      */
-    public MovieApiListAdapter() {
+    public MovieApiListAdapter(List<Integer> movieIdList) {
+
         super(MOVIE_COMPARATOR);
+        listOfMovieIds = movieIdList;
     }
 
     @NonNull
@@ -34,7 +49,7 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_rowlayout, parent, false);
-        return new MovieViewHolder(view);
+        return new MovieViewHolder(view, listOfMovieIds);
     }
 
     @Override
@@ -60,14 +75,18 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
         private TextView textViewYear;
         private TextView textViewData;
         private ImageButton buttonFavorite;
+        private DatabaseReference movieDatabase;
+        private List<Integer> movieIdList;
 
         // Constructor
-        MovieViewHolder(@NonNull View itemView) {
+        MovieViewHolder(@NonNull View itemView, List<Integer> listOfMovieIds) {
             super(itemView);
             textViewTitle = (TextView) itemView.findViewById(R.id.title);
             textViewYear = (TextView) itemView.findViewById(R.id.year);
             textViewData = (TextView) itemView.findViewById(R.id.data);
             buttonFavorite = (ImageButton) itemView.findViewById(R.id.like);
+            movieDatabase = FirebaseDatabase.getInstance().getReference();
+            movieIdList = listOfMovieIds;
         }
 
         /**
@@ -83,48 +102,60 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
             //Assigning Movie Poster
             if (movie.getPoster_path() != null) {
                 // show The Image in a ImageView
-                new MovieViewHolder.DownloadPosterTask((ImageView) itemView.findViewById(R.id.appCompatImageView))
+                new PosterDownloader((ImageView) itemView.findViewById(R.id.appCompatImageView))
                         .execute("http://image.tmdb.org/t/p/w185/" + movie.getPoster_path());
 
+            }
+
+            if (movieIdList.contains(movie.getId())){
+                buttonFavorite.setSelected(true);
             }
 
             // Listender for a button inside the item row
             buttonFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("!!!@@@!!!", "I've tapped on a button " + movie.getTitle());
-                    v.setSelected(true);
+                    if (v.isSelected()){
+                        movieDatabase.child(movie.getId() + "").removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        v.setSelected(false);
+                                        Toast.makeText(itemView.getContext(), "Removed From Watch List", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        v.setSelected(true);
+                                        Toast.makeText(itemView.getContext(), "Error: " +  e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                    else{
+                        Movie newMovie = new Movie(movie.getId(), movie.getTitle(), movie.getRelease_date(), movie.getOverview(), movie.getPoster_path());
+                        movieDatabase.child(movie.getId() + "").setValue(newMovie)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        v.setSelected(true);
+                                        Toast.makeText(itemView.getContext(), "Added To Watch List", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        v.setSelected(false);
+                                        Toast.makeText(itemView.getContext(), "Error: " +  e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+
                 }
             });
         }
 
-        /**
-         * ASYNC task to load movie poster
-         */
-        private class DownloadPosterTask extends AsyncTask<String, Void, Bitmap> {
-            ImageView bmImage;
 
-            public DownloadPosterTask(ImageView bmImage) {
-                this.bmImage = bmImage;
-            }
-
-            protected Bitmap doInBackground(String... urls) {
-                String urldisplay = urls[0];
-                Bitmap mIcon11 = null;
-                try {
-                    InputStream in = new java.net.URL(urldisplay).openStream();
-                    mIcon11 = BitmapFactory.decodeStream(in);
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-                return mIcon11;
-            }
-
-            protected void onPostExecute(Bitmap result) {
-                bmImage.setImageBitmap(result);
-            }
-        }
     }
 
     private static final DiffUtil.ItemCallback<Movie> MOVIE_COMPARATOR = new DiffUtil.ItemCallback<Movie>() {
