@@ -184,9 +184,10 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.global, menu);
-        return true;
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.global, menu);
+//        return true;
+        return false;
     }
 
 
