@@ -61,4 +61,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
         android:divider="@null" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        tools:itemBackground="@color/common_google_signin_btn_text_dark_default"
+        tools:menu="@menu/navigation_menu" />
+
+
 </RelativeLayout>

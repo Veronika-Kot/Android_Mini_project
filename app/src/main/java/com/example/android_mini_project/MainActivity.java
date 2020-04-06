@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
 
     private DatabaseReference movieDatabase;
     private WatchListAdapter watchListAdapter;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        navigationView=findViewById(R.id.nav_view);
 //        toolbar=findViewById(R.id.toolbar);
 
-//        this.setTitle(R.string.watch_list);
+        this.setTitle(R.string.watch_list);
 //        toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
 //        drawerLayout.addDrawerListener(toggle);
 //        toggle.syncState();
@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.nav_movielist:
                         Intent intent = new Intent(MainActivity.this,MovieListActivity.class);
                         startActivity(intent);
+                        break;
                     case R.id.nav_watched_list:
                         Intent intent2 = new Intent(MainActivity.this,WatchedListActivity.class);
                         startActivity(intent2);
@@ -207,23 +208,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.nav_watch_list: break;
-            case R.id.nav_watched_list:
-                Intent intent = new Intent(MainActivity.this,WatchedListActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_movielist:
-                Intent intent1 = new Intent(MainActivity.this,MovieListActivity.class);
-                startActivity(intent1);
-                break;
-
-        }
-//        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        switch (menuItem.getItemId()) {
+//            case R.id.nav_watch_list: break;
+//            case R.id.nav_watched_list:
+//                Intent intent = new Intent(MainActivity.this,WatchedListActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.nav_movielist:
+//                Intent intent1 = new Intent(MainActivity.this,MovieListActivity.class);
+//                startActivity(intent1);
+//                break;
+//
+//        }
+////        drawerLayout.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
     @Override
     protected void onDestroy() {

@@ -1,5 +1,6 @@
 package com.example.android_mini_project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +23,7 @@ import com.example.android_mini_project.helpers.Globals;
 import com.example.android_mini_project.models.Movie;
 import com.example.android_mini_project.viewmodels.MovieViewModal;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +44,7 @@ public class MovieListActivity extends MainActivity {
     SearchView searchView;
     DatabaseReference movieDatabase;
     List<Integer> movieIdList;
+    BottomNavigationView bottomNavigationView;
 
     private static final String TAG = "MovieListActivity";
 
@@ -57,6 +60,27 @@ public class MovieListActivity extends MainActivity {
 //        View contentView = inflater.inflate(R.layout.activity_main, null, false);
 //        drawerLayout.addView(contentView, 0);
 
+        // Navigation bar
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_movielist);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_watch_list:
+                        Intent intent3 = new Intent(MovieListActivity.this,MainActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_movielist:
+                        break;
+                    case R.id.nav_watched_list:
+                        Intent intent2 = new Intent(MovieListActivity.this,WatchedListActivity.class);
+                        startActivity(intent2);
+                        break;
+                }
+                return false;
+            }
+        });
 
         // Setting title to the Activity
         this.setTitle(R.string.search_movies);

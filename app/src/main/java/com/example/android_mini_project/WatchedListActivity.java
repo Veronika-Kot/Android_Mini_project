@@ -77,6 +77,28 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
 //        navigationView.setCheckedItem(R.id.nav_watch_list);
 
 
+        // Navigation bar
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_watched_list);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_watch_list:
+                        Intent intent = new Intent(WatchedListActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_movielist:
+                        Intent intent2 = new Intent(WatchedListActivity.this,MovieListActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_watched_list:
+                        break;
+                }
+                return false;
+            }
+        });
+
 
         // Populate watch list
         sortBy = "byDate";

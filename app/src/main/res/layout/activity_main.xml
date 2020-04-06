@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:orientation="horizontal">
@@ -67,14 +67,16 @@
         android:id="@+id/watchList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp" >
+        android:layout_marginTop="56dp" >
 
     </ListView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
+        app:itemBackground="@color/common_google_signin_btn_text_dark_default"
         app:menu="@menu/navigation_menu" />
 
 </RelativeLayout>

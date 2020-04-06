@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import com.example.android_mini_project.helpers.PosterDownloader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,6 +32,7 @@ public class Movie_Description extends MainActivity {
     TextView descriptionReleaseDate;
     EditText descriptionEditNotes;
     DatabaseReference movieDatabase;
+    BottomNavigationView bottomNavigationView;
 
     Integer id;
     String title;
@@ -45,6 +48,31 @@ public class Movie_Description extends MainActivity {
 
         setContentView(R.layout.activity_movie__description);
         this.setTitle(R.string.movieDescription);
+
+        // Navigation bar
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.getMenu().getItem(0).setCheckable(false);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_watch_list:
+                        Intent intent = new Intent(Movie_Description.this,MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_movielist:
+                        Intent intent2 = new Intent(Movie_Description.this,MovieListActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_watched_list:
+                        Intent intent3 = new Intent(Movie_Description.this,WatchedListActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return false;
+            }
+        });
+
         descriptionTitle = findViewById(R.id.descriptionTitle);
         descriptionDescription = findViewById(R.id.descriptionDescription);
         descriptionImageView = findViewById(R.id.descriptionImageView);

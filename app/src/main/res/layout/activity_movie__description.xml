@@ -1,105 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
- <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Movie_Description" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/descriptionImageView"
-                android:layout_width="match_parent"
-                android:layout_height="215dp"
-                android:layout_marginTop="40dp"
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
-                android:src="@drawable/ic_local_movies_black_24dp" />
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/descriptionTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="50dp"
-                android:text="Title:"
-                android:textSize="24sp"
-                android:textStyle="bold">
+             <androidx.appcompat.widget.AppCompatImageView
+                 android:id="@+id/descriptionImageView"
+                 android:layout_width="match_parent"
+                 android:layout_height="215dp"
+                 android:layout_marginTop="40dp"
+
+                 android:src="@drawable/ic_local_movies_black_24dp" />
+
+             <TextView
+                 android:id="@+id/descriptionTitle"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="50dp"
+                 android:text="Title:"
+                 android:textSize="24sp"
+                 android:textStyle="bold">
 
 
-            </TextView>
+             </TextView>
 
-            <TextView
-                android:id="@+id/descriptionDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:maxLines="1"
-                android:text="Overview:"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+             <TextView
+                 android:id="@+id/descriptionDate"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="8dp"
+                 android:maxLines="1"
+                 android:text="Overview:"
+                 android:textSize="24sp"
+                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/descriptionDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Description:"
-                android:textSize="24sp"
-                android:textStyle="bold">
+             <TextView
+                 android:id="@+id/descriptionDescription"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="8dp"
+                 android:text="Description:"
+                 android:textSize="24sp"
+                 android:textStyle="bold">
 
-            </TextView>
+             </TextView>
 
-            <TextView
-                android:id="@+id/descriptionNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Notes:"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+             <TextView
+                 android:id="@+id/descriptionNotes"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="8dp"
+                 android:text="Notes:"
+                 android:textSize="24sp"
+                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/descriptionEditNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="2dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textSize="20sp" />
+             <EditText
+                 android:id="@+id/descriptionEditNotes"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="2dp"
+                 android:ems="10"
+                 android:inputType="textPersonName"
+                 android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/buttonUpdate"
-                style="@style/MovieSearchButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:onClick="updateNotes"
-                android:text="@string/common_google_play_services_update_button" />
+             <Button
+                 android:id="@+id/buttonUpdate"
+                 style="@style/MovieSearchButton"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="8dp"
+                 android:onClick="updateNotes"
+                 android:text="@string/common_google_play_services_update_button" />
 
-            <Button
-                android:id="@+id/buttonBack"
-                style="@style/MovieSearchButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:onClick="backToList"
-                android:text="Back" />
-        </LinearLayout>
-    </ScrollView>
+             <Button
+                 android:id="@+id/buttonBack"
+                 style="@style/MovieSearchButton"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="8dp"
+                 android:layout_marginLeft="8dp"
+                 android:layout_marginTop="8dp"
+                 android:layout_marginBottom="64dp"
+                 android:onClick="backToList"
+                 android:text="Back" />
+         </LinearLayout>
+     </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/common_google_signin_btn_text_dark_default"
+        app:menu="@menu/navigation_menu" />
+</RelativeLayout>
