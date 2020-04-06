@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
@@ -67,8 +68,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        tools:itemBackground="@color/common_google_signin_btn_text_dark_default"
-        tools:menu="@menu/navigation_menu" />
+        app:itemBackground="@color/common_google_signin_btn_text_dark_default"
+        app:menu="@menu/navigation_menu" />
 
 
 </RelativeLayout>
