@@ -18,6 +18,12 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.android_mini_project.helpers.PosterDownloader;
 import com.example.android_mini_project.models.Movie;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,9 +34,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAdapter.MovieViewHolder> {
 
@@ -140,6 +150,39 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
                                     public void onSuccess(Void aVoid) {
                                         v.setSelected(true);
                                         Toast.makeText(itemView.getContext(), "Added To Watch List", Toast.LENGTH_LONG).show();
+                                        //send e-mail
+
+                                        sendEmail();
+
+                                    }
+                                    public void sendEmail() {
+                                        RequestQueue queue;
+                                        queue = Volley.newRequestQueue(v.getContext());
+                                        String url = "https://jasontestformapd.us-south.cf.appdomain.cloud/m";
+                                        String emailAddress = "jasonsun0603@gmail.com";
+                                        Map<String, String> params = new HashMap();
+                                        params.put("movie_title", movie.getTitle());
+                                        params.put("movie_release", movie.getRelease_date());
+                                        params.put("movie_overview", movie.getOverview());
+                                        params.put("movie_poster", movie.getPoster_path());
+                                        params.put("email_address", emailAddress);
+                                        params.put("day", "5");
+
+                                        JSONObject parameters = new JSONObject(params);
+
+                                        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                //
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                error.printStackTrace();
+                                                //
+                                            }
+                                        });
+                                        queue.add(jsonRequest);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
