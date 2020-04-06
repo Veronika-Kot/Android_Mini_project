@@ -22,6 +22,14 @@ import com.example.android_mini_project.helpers.Globals;
 import com.example.android_mini_project.models.Movie;
 import com.example.android_mini_project.viewmodels.MovieViewModal;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MovieListActivity to show a list of all available movies
@@ -32,6 +40,8 @@ public class MovieListActivity extends MainActivity {
     MovieViewModal itemViewModel;
     RecyclerView listview;
     SearchView searchView;
+    DatabaseReference movieDatabase;
+    List<Integer> movieIdList;
 
     private static final String TAG = "MovieListActivity";
 
@@ -51,11 +61,29 @@ public class MovieListActivity extends MainActivity {
         // Setting title to the Activity
         this.setTitle(R.string.search_movies);
 
+        // Set Database Reference
+        movieDatabase = FirebaseDatabase.getInstance().getReference();
+        movieIdList = new ArrayList<Integer>();
+
         // Creates reference of RecyclerView
         listview = findViewById(R.id.movieList);
 
+        ValueEventListener getListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    movieIdList.add(Integer.parseInt(ds.getKey()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
+        movieDatabase.addListenerForSingleValueEvent(getListener);
+
         // Creating and setting adapter
-        adapter = new MovieApiListAdapter();
+        adapter = new MovieApiListAdapter(movieIdList);
         listview.setLayoutManager(new LinearLayoutManager(this));
 
         // Getting instance of MovieViewModal
@@ -68,6 +96,7 @@ public class MovieListActivity extends MainActivity {
                 adapter.submitList(movies);
             }
         });
+
         listview.setAdapter(adapter);
 
         // Setting Popular button to be presses, since it's a default endpoint

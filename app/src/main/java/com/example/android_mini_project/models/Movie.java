@@ -9,6 +9,12 @@ public class Movie implements Serializable {
     String release_date;
     String overview;
     String poster_path;
+    String notes;
+    Boolean watched;
+
+    public Movie(){
+
+    }
 
     public Movie(int id, String title, String release_date, String overview, String poster_path) {
         this.id = id;
@@ -16,6 +22,18 @@ public class Movie implements Serializable {
         this.release_date = release_date;
         this.overview = overview;
         this.poster_path = poster_path;
+        this.notes = "";
+        this.watched = false;
+    }
+
+    public Movie(int id, String title, String release_date, String overview, String poster_path, String notes, Boolean watched) {
+        this.id = id;
+        this.title = title;
+        this.release_date = release_date;
+        this.overview = overview;
+        this.poster_path = poster_path;
+        this.notes = notes;
+        this.watched = watched;
     }
 
     public String getPoster_path() {
@@ -56,5 +74,21 @@ public class Movie implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Boolean getWatched() {
+        return watched;
+    }
+
+    public void setWatched(Boolean watched) {
+        this.watched = watched;
     }
 }
