@@ -107,15 +107,14 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
 
             }
 
-            if (movieIdList.contains(movie.getId())){
-                buttonFavorite.setSelected(true);
-            }
+            buttonFavorite.setSelected(movieIdList.contains(movie.getId()));
 
             // Listender for a button inside the item row
             buttonFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (v.isSelected()){
+                        movieIdList.remove(Integer.valueOf(movie.getId()));
                         movieDatabase.child(movie.getId() + "").removeValue()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -133,6 +132,7 @@ public class MovieApiListAdapter extends PagedListAdapter<Movie, MovieApiListAda
                                 });
                     }
                     else{
+                        movieIdList.add(movie.getId());
                         Movie newMovie = new Movie(movie.getId(), movie.getTitle(), movie.getRelease_date(), movie.getOverview(), movie.getPoster_path());
                         movieDatabase.child(movie.getId() + "").setValue(newMovie)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
