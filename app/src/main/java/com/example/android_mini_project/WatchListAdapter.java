@@ -78,72 +78,53 @@ public class WatchListAdapter extends ArrayAdapter<Movie> {
             viewHolder.buttonWatch = row.findViewById(R.id.watch);
             viewHolder.buttonEdit = row.findViewById(R.id.edit);
             viewHolder.imageViewMoviePoster = row.findViewById(R.id.appCompatImageView2);
-            viewHolder.buttonWatch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Dialog dialog = new Dialog(cxt);
-                    dialog.setContentView(R.layout.watch_list_dialog);
-                    Button buttonWatched = dialog.findViewById(R.id.buttonWatched);
-                    Button buttonNotWatching = dialog.findViewById(R.id.buttonNotWatching);
-                    Button buttonCancel = dialog.findViewById(R.id.buttonCancel);
-                    if (movie.getWatched()){
-                        dialog.setTitle("Remove This Movie?");
-                        buttonNotWatching.setText("Remove From History");
-                        buttonWatched.setText("Haven't Watched Yet");
-                    }
-                    else{
-                        dialog.setTitle("Have You Watched This Movie?");
-                        buttonNotWatching.setText("Not Watching It");
-                        buttonWatched.setText("I've Watched It");
-                    }
-                    buttonWatched.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (buttonWatched.getText().toString().toLowerCase() == "i've watched it"){
-                                movieDatabase.child(movie.getId() + "").child("watched").setValue(true)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                notifyDataSetChanged();
-                                                dialog.dismiss();
-                                                Toast.makeText(cxt, "Moved To Watch History", Toast.LENGTH_LONG).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(cxt, "Error: " +  e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                            }else{
-                                movieDatabase.child(movie.getId() + "").child("watched").setValue(false)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                notifyDataSetChanged();
-                                                dialog.dismiss();
-                                                Toast.makeText(cxt, "Moved To Watch List", Toast.LENGTH_LONG).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(cxt, "Error: " +  e.getMessage(), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                            }
-                        }
-                    });
-                    buttonNotWatching.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            movieDatabase.child(movie.getId() + "").removeValue()
+            row.setTag(viewHolder);
+        } else {
+            viewHolder = (WatchListViewHolder) row.getTag();
+        }
+        viewHolder.buttonWatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(cxt);
+                dialog.setContentView(R.layout.watch_list_dialog);
+                Button buttonWatched = dialog.findViewById(R.id.buttonWatched);
+                Button buttonNotWatching = dialog.findViewById(R.id.buttonNotWatching);
+                Button buttonCancel = dialog.findViewById(R.id.buttonCancel);
+                if (movie.getWatched()){
+                    dialog.setTitle("Remove This Movie?");
+                    buttonNotWatching.setText("Remove From History");
+                    buttonWatched.setText("Haven't Watched Yet");
+                }
+                else{
+                    dialog.setTitle("Have You Watched This Movie?");
+                    buttonNotWatching.setText("Not Watching It");
+                    buttonWatched.setText("I've Watched It");
+                }
+                buttonWatched.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (buttonWatched.getText().toString().toLowerCase().compareToIgnoreCase("i've watched it") == 0){
+                            movieDatabase.child(movie.getId() + "").child("watched").setValue(true)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            notifyDataSetChanged();
                                             dialog.dismiss();
-                                            Toast.makeText(cxt, "Movie Removed", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(cxt, "Moved To Watch History", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(cxt, "Error: " +  e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }else{
+                            movieDatabase.child(movie.getId() + "").child("watched").setValue(false)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            dialog.dismiss();
+                                            Toast.makeText(cxt, "Moved To Watch List", Toast.LENGTH_LONG).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -153,35 +134,50 @@ public class WatchListAdapter extends ArrayAdapter<Movie> {
                                         }
                                     });
                         }
-                    });
-                    buttonCancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialog.show();
-                }
-            });
-            viewHolder.buttonEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(cxt, Movie_Description.class);
-                    i.putExtra("id", movie.getId());
-                    i.putExtra("title", movie.getTitle());
-                    i.putExtra("overview", movie.getOverview());
-                    i.putExtra("release_date", movie.getRelease_date());
-                    i.putExtra("poster_path", movie.getPoster_path());
-                    i.putExtra("watched", movie.getWatched());
-                    i.putExtra("notes", movie.getNotes());
-                    cxt.startActivity(i);
-                }
-            });
-            row.setTag(viewHolder);
-        } else {
-            viewHolder = (WatchListViewHolder) row.getTag();
-        }
-
+                    }
+                });
+                buttonNotWatching.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        movieDatabase.child(movie.getId() + "").removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        dialog.dismiss();
+                                        Toast.makeText(cxt, "Movie Removed", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(cxt, "Error: " +  e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                    }
+                });
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+        viewHolder.buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(cxt, Movie_Description.class);
+                i.putExtra("id", movie.getId());
+                i.putExtra("title", movie.getTitle());
+                i.putExtra("overview", movie.getOverview());
+                i.putExtra("release_date", movie.getRelease_date());
+                i.putExtra("poster_path", movie.getPoster_path());
+                i.putExtra("watched", movie.getWatched());
+                i.putExtra("notes", movie.getNotes());
+                cxt.startActivity(i);
+            }
+        });
         viewHolder.textViewTitle.setText(movie.getTitle());
         viewHolder.textViewDate.setText(movie.getRelease_date());
 

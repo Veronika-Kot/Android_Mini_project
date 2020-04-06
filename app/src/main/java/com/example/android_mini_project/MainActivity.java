@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sortBy = "byDate";
         buttonSortDate = findViewById(R.id.buttonSortDate);
         buttonSortTitle = findViewById(R.id.buttonSortTitle);
+        buttonSortDate.setSelected(true);
+        buttonSortTitle.setSelected(false);
         watchList = findViewById(R.id.watchList);
         watchListAdapter  = new WatchListAdapter(MainActivity.this, R.layout.watch_list_rou_layout);
         watchList.setAdapter(watchListAdapter);
@@ -95,8 +97,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         watchListAdapter.add(ds.getValue(Movie.class));
                     }
                 }
-                watchListAdapter.sortByDate();
-                buttonSortDate.setSelected(true);
+                switch(sortBy) {
+                    case "byDateReverse":
+                        watchListAdapter.sortByDateReverse();
+                        break;
+                    case "byTitle":
+                        watchListAdapter.sortByTitle();
+                        break;
+                    case "byTitleReverse":
+                        watchListAdapter.sortByTitleReverse();
+                        break;
+                    default:
+                        watchListAdapter.sortByDate();
+                        break;
+                }
             }
 
             @Override
@@ -108,28 +122,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void sortByDate(View view){
+        buttonSortDate.setSelected(true);
+        buttonSortTitle.setSelected(false);
         if (sortBy == "byDate"){
             watchListAdapter.sortByDateReverse();
             sortBy = "byDateReverse";
         }
         else{
             watchListAdapter.sortByDate();
-            buttonSortDate.setSelected(true);
-            buttonSortTitle.setSelected(false);
             sortBy = "byDate";
         }
         watchListAdapter.notifyDataSetChanged();
     }
 
     public void sortByTitle(View view){
+        buttonSortDate.setSelected(false);
+        buttonSortTitle.setSelected(true);
         if (sortBy == "byTitle"){
             watchListAdapter.sortByTitleReverse();
             sortBy = "byTitleReverse";
         }
         else{
             watchListAdapter.sortByTitle();
-            buttonSortDate.setSelected(false);
-            buttonSortTitle.setSelected(true);
             sortBy = "byTitle";
         }
         watchListAdapter.notifyDataSetChanged();
