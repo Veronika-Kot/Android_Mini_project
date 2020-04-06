@@ -49,19 +49,19 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watched_list);
         // setting navigation bar
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_main, null, false);
-        drawerLayout.addView(contentView, 0);
+//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+//        drawerLayout.addView(contentView, 0);
+//
+//        drawerLayout=findViewById(R.id.drawer_layout);
+//        navigationView=findViewById(R.id.nav_view);
+////        toolbar=findViewById(R.id.toolbar);
+//
+//        toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.setTitle(R.string.watched_list);
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_view);
-//        toolbar=findViewById(R.id.toolbar);
-
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 //        ActionBar actionBar;
 //        actionBar = getSupportActionBar();
@@ -70,14 +70,16 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
 //
 //        // Set BackgroundDrawable
 //        actionBar.setBackgroundDrawable(colorDrawable);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        navigationView.setCheckedItem(R.id.nav_watch_list);
+//        navigationView.setNavigationItemSelectedListener(this);
+//
+//        navigationView.setCheckedItem(R.id.nav_watch_list);
 
         // Populate watch list
         sortBy = "byDate";
         buttonSortDate = findViewById(R.id.buttonSortDate);
         buttonSortTitle = findViewById(R.id.buttonSortTitle);
+        buttonSortDate.setSelected(true);
+        buttonSortTitle.setSelected(false);
         watchList = findViewById(R.id.watchList);
         watchListAdapter  = new WatchListAdapter(WatchedListActivity.this, R.layout.watch_list_rou_layout);
         watchList.setAdapter(watchListAdapter);
@@ -92,8 +94,20 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
                         watchListAdapter.add(ds.getValue(Movie.class));
                     }
                 }
-                watchListAdapter.sortByDate();
-                buttonSortDate.setSelected(true);
+                switch(sortBy) {
+                    case "byDateReverse":
+                        watchListAdapter.sortByDateReverse();
+                        break;
+                    case "byTitle":
+                        watchListAdapter.sortByTitle();
+                        break;
+                    case "byTitleReverse":
+                        watchListAdapter.sortByTitleReverse();
+                        break;
+                    default:
+                        watchListAdapter.sortByDate();
+                        break;
+                }
             }
 
             @Override
@@ -105,28 +119,28 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
     }
 
     public void sortByDate(View view){
+        buttonSortDate.setSelected(true);
+        buttonSortTitle.setSelected(false);
         if (sortBy == "byDate"){
             watchListAdapter.sortByDateReverse();
             sortBy = "byDateReverse";
         }
         else{
             watchListAdapter.sortByDate();
-            buttonSortDate.setSelected(true);
-            buttonSortTitle.setSelected(false);
             sortBy = "byDate";
         }
         watchListAdapter.notifyDataSetChanged();
     }
 
     public void sortByTitle(View view){
+        buttonSortDate.setSelected(false);
+        buttonSortTitle.setSelected(true);
         if (sortBy == "byTitle"){
             watchListAdapter.sortByTitleReverse();
             sortBy = "byTitleReverse";
         }
         else{
             watchListAdapter.sortByTitle();
-            buttonSortDate.setSelected(false);
-            buttonSortTitle.setSelected(true);
             sortBy = "byTitle";
         }
         watchListAdapter.notifyDataSetChanged();

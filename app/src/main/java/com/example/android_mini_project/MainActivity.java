@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 
 import com.example.android_mini_project.models.Movie;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Button buttonSortTitle;
     private String sortBy;
     ValueEventListener getListener;
+    BottomNavigationView bottomNavigationView;
 
     Menu menu;
 
@@ -76,6 +78,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_watch_list);
+
+        // Navigation bar
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.nav_watch_list);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_watch_list:
+                        break;
+                    case R.id.nav_movielist:
+                        Intent intent = new Intent(MainActivity.this,MovieListActivity.class);
+                        startActivity(intent);
+                    case R.id.nav_watched_list:
+                        Intent intent2 = new Intent(MainActivity.this,WatchedListActivity.class);
+                        startActivity(intent2);
+                        break;
+                }
+                return false;
+            }
+        });
 
         // Populate watch list
         sortBy = "byDate";
