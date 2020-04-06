@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import static android.content.Context.*;
 
 import com.example.android_mini_project.models.Movie;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +40,7 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
     Button buttonSortTitle;
     private String sortBy;
     ValueEventListener getListener;
+    BottomNavigationView bottomNavigationView;
 
     Menu menu;
 
@@ -73,6 +75,8 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
 //        navigationView.setNavigationItemSelectedListener(this);
 //
 //        navigationView.setCheckedItem(R.id.nav_watch_list);
+
+
 
         // Populate watch list
         sortBy = "byDate";
@@ -146,15 +150,15 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
         watchListAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onBackPressed(){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else
-        {super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed(){
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        }
+//        else
+//        {super.onBackPressed();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,8 +170,8 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(toggle.onOptionsItemSelected(item))
-        {return  true;}
+//        if(toggle.onOptionsItemSelected(item))
+//        {return  true;}
         switch (item.getItemId()) {
             case R.id.search_movies:
                 Intent intent = new Intent(WatchedListActivity.this, MovieListActivity.class);
@@ -195,7 +199,7 @@ public class WatchedListActivity extends AppCompatActivity implements Navigation
                 break;
 
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

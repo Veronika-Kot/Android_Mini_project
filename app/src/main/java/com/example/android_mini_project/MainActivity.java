@@ -37,9 +37,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    private ActionBarDrawerToggle toggle;
+
     private DatabaseReference movieDatabase;
     private WatchListAdapter watchListAdapter;
     ListView watchList;
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ValueEventListener getListener;
     BottomNavigationView bottomNavigationView;
 
-    Menu menu;
+
 
 
 
@@ -57,15 +55,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_view);
+//        drawerLayout=findViewById(R.id.drawer_layout);
+//        navigationView=findViewById(R.id.nav_view);
 //        toolbar=findViewById(R.id.toolbar);
 
-        this.setTitle(R.string.watch_list);
-        toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        this.setTitle(R.string.watch_list);
+//        toggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 //        ActionBar actionBar;
@@ -75,9 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //
 //        // Set BackgroundDrawable
 //        actionBar.setBackgroundDrawable(colorDrawable);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        navigationView.setCheckedItem(R.id.nav_watch_list);
+//        navigationView.setNavigationItemSelectedListener(this);
+//
+//        navigationView.setCheckedItem(R.id.nav_watch_list);
 
         // Navigation bar
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -99,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return false;
             }
         });
+
+
 
         // Populate watch list
         sortBy = "byDate";
@@ -172,15 +172,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         watchListAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onBackPressed(){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else
-        {super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed(){
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        }
+//        else
+//        {super.onBackPressed();
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       if(toggle.onOptionsItemSelected(item))
-       {return  true;}
+//       if(toggle.onOptionsItemSelected(item))
+//       {return  true;}
         switch (item.getItemId()) {
             case R.id.search_movies:
                 Intent intent = new Intent(MainActivity.this, MovieListActivity.class);
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

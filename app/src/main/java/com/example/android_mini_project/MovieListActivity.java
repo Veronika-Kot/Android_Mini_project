@@ -53,9 +53,9 @@ public class MovieListActivity extends MainActivity {
         setContentView(R.layout.activity_movie_list);
 
         // setting navigation bar
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_main, null, false);
-        drawerLayout.addView(contentView, 0);
+//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//        View contentView = inflater.inflate(R.layout.activity_main, null, false);
+//        drawerLayout.addView(contentView, 0);
 
 
         // Setting title to the Activity
